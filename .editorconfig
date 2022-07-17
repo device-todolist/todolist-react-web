@@ -5,7 +5,7 @@ root = true
 
 [*]
 # 设置缩进风格(tab是硬缩进，space为软缩进)
-indent_style = space 
+indent_style = space
 # 用一个整数定义的列数来设置缩进的宽度，如果indent_style为tab，则此属性默认为  tab_width
 indent_size = 2
 # 设置换行符，值为lf、cr和crlf
