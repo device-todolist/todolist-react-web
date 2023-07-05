@@ -49,24 +49,34 @@
     "url": "https://github.com/chenxingyu0830",
     "email": "chenxingyu0830@gmail.com"
   },
-  "license": "GPL-3.0 license",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/device-todolist/todolist-react-web/issues"
   },
   "homepage": "https://github.com/device-todolist/todolist-react-web#readme",
   "devDependencies": {
+    "@babel/core": "^7.22.6",
+    "@babel/plugin-transform-runtime": "^7.22.6",
+    "@babel/preset-env": "^7.22.6",
+    "@babel/preset-react": "^7.22.5",
+    "@babel/preset-typescript": "^7.22.5",
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@typescript-eslint/parser": "^5.29.0",
     "autoprefixer": "^10.4.14",
+    "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",
     "conventional-changelog-cli": "^2.2.2",
+    "copy-webpack-plugin": "^11.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.8.1",
     "eslint": "^8.18.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^4.2.1",
@@ -101,5 +111,10 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.15.1",
     "webpack-merge": "^5.9.0"
+  },
+  "dependencies": {
+    "@babel/runtime-corejs3": "^7.22.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
