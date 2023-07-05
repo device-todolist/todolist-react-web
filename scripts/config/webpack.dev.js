@@ -1,6 +1,8 @@
+const Webpack = require("webpack");
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common");
 const { SERVER_HOST, SERVER_PORT } = require("../constants");
+const proxySetting = require("./proxy");
 
 // NOTE - 配置信息有所调整，从v3迁移至v4，链接 https://github.com/webpack/webpack-dev-server/blob/master/migration-v4.md
 module.exports = merge(common, {
@@ -18,5 +20,7 @@ module.exports = merge(common, {
     compress: true, // 是否启用 gzip 压缩
     open: false, // 打开默认浏览器
     hot: true, // 热更新
+    proxy: { ...proxySetting }, // 代理
   },
+  plugins: [new Webpack.HotModuleReplacementPlugin()],
 });

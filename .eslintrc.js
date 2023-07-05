@@ -49,6 +49,7 @@ module.exports = {
     "import/prefer-default-export": OFF,
     "import/no-unresolved": ERROR,
     "import/no-dynamic-require": OFF,
+    "import/no-import-module-exports": "off",
 
     "unicorn/better-regex": ERROR,
     "unicorn/prevent-abbreviations": OFF,
