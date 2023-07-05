@@ -1,5 +1,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
+const WebpackBar = require("webpackbar");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const { isDev, PROJECT_PATH } = require("../constants");
 
 const getCssLoaders = (importLoaders) => [
@@ -49,6 +52,10 @@ module.exports = {
       Components: path.resolve(PROJECT_PATH, "./src/components"),
       Utils: path.resolve(PROJECT_PATH, "./src/utils"),
     },
+  },
+  externals: {
+    react: "React",
+    "react-dom": "ReactDOM",
   },
   module: {
     rules: [
@@ -146,5 +153,38 @@ module.exports = {
             useShortDoctype: true,
           },
     }),
+    new CopyPlugin({
+      patterns: [
+        {
+          context: path.resolve(PROJECT_PATH, "./public"),
+          from: "*",
+          to: path.resolve(PROJECT_PATH, "./dist"),
+          toType: "dir",
+          globOptions: {
+            dot: true,
+            gitignore: true,
+            ignore: ["**/index.html"],
+          },
+        },
+      ],
+    }),
+    new WebpackBar({
+      name: isDev ? "正在启动" : "正在打包",
+      color: "#fa8c16",
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: path.resolve(PROJECT_PATH, "./tsconfig.json"),
+      },
+    }),
   ],
+  optimization: {
+    minimize: false,
+    minimizer: [],
+    splitChunks: {
+      chunks: "all",
+      name: "vendors",
+      minSize: 0,
+    },
+  },
 };

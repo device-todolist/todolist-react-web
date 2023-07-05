@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "Components/Header";
-import "./App.scss";
+import "./app.scss";
 
 interface IProps {
   name: string;
