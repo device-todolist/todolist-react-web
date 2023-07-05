@@ -9,6 +9,7 @@ module.exports = {
     "no-descending-specificity": null,
     "no-invalid-double-slash-comments": null,
     "rule-empty-line-before": "always",
+    "no-missing-end-of-source-newline": null,
   },
   ignoreFiles: ["node_modules/**/*", "build/**/*"],
 };

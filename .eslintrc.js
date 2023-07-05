@@ -2,7 +2,6 @@ const OFF = 0;
 const WARN = 1;
 const ERROR = 2;
 
-// eslint-disable-next-line unicorn/prefer-module
 module.exports = {
   env: {
     browser: true,
@@ -53,6 +52,8 @@ module.exports = {
 
     "unicorn/better-regex": ERROR,
     "unicorn/prevent-abbreviations": OFF,
+    "unicorn/prefer-module": OFF,
+    "unicorn/import-style": OFF,
     "unicorn/filename-case": [
       ERROR,
       {
