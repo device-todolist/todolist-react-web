@@ -71,6 +71,7 @@ module.exports = {
     ],
     "unicorn/no-array-instanceof": WARN,
     "unicorn/no-for-loop": WARN,
+    "unicorn/expiring-todo-comments": "off",
     "unicorn/prefer-add-event-listener": [
       ERROR,
       {
@@ -113,7 +114,7 @@ module.exports = {
     "no-plusplus": OFF,
     "no-console": OFF,
     "class-methods-use-this": ERROR,
-    "jsx-quotes": [ERROR, "prefer-single"],
+    "jsx-quotes": [ERROR, "prefer-double"],
     "global-require": OFF,
     "no-use-before-define": OFF,
     "no-restricted-syntax": OFF,
