@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "Components/Header";
+import { add, minus } from "Utils/math";
 import "./app.scss";
 
 interface IProps {
@@ -13,6 +14,7 @@ function App(props: IProps) {
     <div className="app">
       <Header />
       <span>{`Hello! I'm ${name}, ${age} yearssss old.`}</span>
+      <div>{add(5, 6)}</div>
     </div>
   );
 }
