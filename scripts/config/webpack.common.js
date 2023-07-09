@@ -1,19 +1,18 @@
-const { resolve } = require("path");
-const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const WebpackBar = require("webpackbar");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { isDev, PROJECT_PATH } = require("../constants");
+const paths = require("../paths");
+const { isDevelopment, isProduction } = require("../env");
 
 const getCssLoaders = (importLoaders) => [
-  isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+  isDevelopment ? "style-loader" : MiniCssExtractPlugin.loader,
   {
     loader: "css-loader",
     options: {
       modules: false,
-      sourceMap: isDev,
+      sourceMap: isDevelopment,
       importLoaders,
     },
   },
@@ -23,7 +22,7 @@ const getCssLoaders = (importLoaders) => [
       postcssOptions: {
         plugins: [
           require("postcss-flexbugs-fixes"),
-          isDev && [
+          isProduction && [
             "postcss-preset-env",
             {
               autoprefixer: {
@@ -41,18 +40,24 @@ const getCssLoaders = (importLoaders) => [
 
 module.exports = {
   entry: {
-    app: resolve(PROJECT_PATH, "./src/index.tsx"),
+    app: paths.appIndex,
   },
-  output: {
-    filename: `js/[name]${isDev ? ".js" : ".[hash:8].js"}`,
-    path: resolve(PROJECT_PATH, "./dist"),
+  cache: {
+    type: "filesystem",
+    buildDependencies: {
+      config: [__filename],
+    },
   },
+  // output: {
+  //   filename: `js/[name]${isDevelopment ? ".js" : ".[hash:8].js"}`,
+  //   path: resolve(PROJECT_PATH, "./dist"),
+  // },
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".json"],
     alias: {
-      Src: resolve(PROJECT_PATH, "./src"),
-      Components: resolve(PROJECT_PATH, "./src/components"),
-      Utils: resolve(PROJECT_PATH, "./src/utils"),
+      Src: paths.appSrc,
+      Components: paths.appSrcComponents,
+      Utils: paths.appSrcUtils,
     },
   },
   externals: {
@@ -78,7 +83,7 @@ module.exports = {
           {
             loader: "less-loader",
             options: {
-              sourceMap: isDev,
+              sourceMap: isDevelopment,
             },
           },
         ],
@@ -90,7 +95,7 @@ module.exports = {
           {
             loader: "sass-loader",
             options: {
-              sourceMap: isDev,
+              sourceMap: isDevelopment,
             },
           },
         ],
@@ -135,10 +140,10 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: resolve(PROJECT_PATH, "./public/index.html"),
+      template: paths.appHtml,
       filename: "index.html",
       cache: false, // 特别重要：防止之后使用v6版本 copy-webpack-plugin 时代码修改一刷新页面为空问题。
-      minify: isDev
+      minify: isDevelopment
         ? false
         : {
             removeAttributeQuotes: true,
@@ -158,9 +163,9 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          context: resolve(PROJECT_PATH, "./public"),
+          context: paths.appPublic,
           from: "*",
-          to: resolve(PROJECT_PATH, "./dist"),
+          to: paths.appBuild,
           toType: "dir",
           globOptions: {
             dot: true,
@@ -171,12 +176,12 @@ module.exports = {
       ],
     }),
     new WebpackBar({
-      name: isDev ? "正在启动" : "正在打包",
-      color: "#fa8c16",
+      name: isDevelopment ? "正在启动" : "正在打包",
+      color: isDevelopment ? "#52c41a" : "#722ed1",
     }),
     new ForkTsCheckerWebpackPlugin({
       typescript: {
-        configFile: resolve(PROJECT_PATH, "./tsconfig.json"),
+        configFile: paths.appTsConfig,
       },
     }),
   ],
