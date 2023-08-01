@@ -14,6 +14,7 @@ module.exports = merge(common, {
   output: {
     filename: "js/[name].js",
     path: paths.appBuild,
+    publicPath: "/",
   },
   resolve: {
     fallback: {
@@ -33,6 +34,7 @@ module.exports = merge(common, {
     open: false, // 打开默认浏览器
     hot: true, // 热更新
     proxy: { ...proxySetting }, // 代理
+    historyApiFallback: true,
   },
   plugins: [new Webpack.HotModuleReplacementPlugin(), new ErrorOverlayPlugin()],
 });

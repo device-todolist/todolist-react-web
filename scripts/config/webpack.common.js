@@ -1,10 +1,11 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const WebpackBar = require("webpackbar");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 const paths = require("../paths");
 const { isDevelopment, isProduction } = require("../env");
+const { imageInlineSizeLimit } = require("../conf");
 
 const getCssLoaders = (importLoaders) => [
   isDevelopment ? "style-loader" : MiniCssExtractPlugin.loader,
@@ -48,14 +49,10 @@ module.exports = {
       config: [__filename],
     },
   },
-  // output: {
-  //   filename: `js/[name]${isDevelopment ? ".js" : ".[hash:8].js"}`,
-  //   path: resolve(PROJECT_PATH, "./dist"),
-  // },
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".json"],
     alias: {
-      Src: paths.appSrc,
+      "@": paths.appSrc,
       Components: paths.appSrcComponents,
       Utils: paths.appSrcUtils,
     },
@@ -102,63 +99,23 @@ module.exports = {
       },
       {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              limit: 10 * 1024,
-              name: "[name].[contenthash:8].[ext]",
-              outputPath: "assets/images",
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(ttf|woff|woff2|eot|otf)$/,
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              name: "[name].[contenthash:8].[ext]",
-              outputPath: "assets/fonts",
-            },
-          },
-        ],
-      },
-      {
-        test: /\.svg/,
-        use: {
-          loader: "svg-url-loader",
-          options: {
-            limit: 10 * 1024,
-            name: "[name].[contenthash:8].[ext]",
-            outputPath: "assets/images",
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: imageInlineSizeLimit,
           },
         },
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2?)$/,
+        type: "asset/resource",
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: paths.appHtml,
-      filename: "index.html",
-      cache: false, // 特别重要：防止之后使用v6版本 copy-webpack-plugin 时代码修改一刷新页面为空问题。
-      minify: isDevelopment
-        ? false
-        : {
-            removeAttributeQuotes: true,
-            collapseWhitespace: true,
-            removeComments: true,
-            collapseBooleanAttributes: true,
-            collapseInlineTagWhitespace: true,
-            removeRedundantAttributes: true,
-            removeScriptTypeAttributes: true,
-            removeStyleLinkTypeAttributes: true,
-            minifyCSS: true,
-            minifyJS: true,
-            minifyURLs: true,
-            useShortDoctype: true,
-          },
+      cache: true,
     }),
     new CopyPlugin({
       patterns: [
@@ -185,13 +142,4 @@ module.exports = {
       },
     }),
   ],
-  optimization: {
-    minimize: false,
-    minimizer: [],
-    splitChunks: {
-      chunks: "all",
-      name: "vendors",
-      minSize: 0,
-    },
-  },
 };

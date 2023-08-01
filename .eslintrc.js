@@ -120,5 +120,16 @@ module.exports = {
     "no-use-before-define": OFF,
     "no-restricted-syntax": OFF,
     "no-continue": OFF,
+
+    // 只允许使用箭头函数定义函数组件
+    "react/function-component-definition": [
+      ERROR,
+      {
+        namedComponents: "arrow-function",
+        unnamedComponents: "arrow-function",
+      },
+    ],
+    "react/no-array-index-key": OFF,
+    "react/no-children-prop": OFF,
   },
 };

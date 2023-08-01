@@ -8,7 +8,7 @@ interface IProps {
   age: number;
 }
 
-function App(props: IProps) {
+const App = (props: IProps) => {
   const { name, age } = props;
   return (
     <div className="app">
@@ -17,6 +17,6 @@ function App(props: IProps) {
       <div>{add(5, 6)}</div>
     </div>
   );
-}
+};
 
 export default App;

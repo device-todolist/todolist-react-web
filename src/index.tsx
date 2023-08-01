@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import App from "./app";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes/router";
 
 const rootElement = document.querySelector("#root");
 const root = createRoot(rootElement as HTMLElement);
@@ -11,6 +12,6 @@ if (module && module.hot) {
 
 root.render(
   <React.StrictMode>
-    <App name="cxy" age={27} />
+    <RouterProvider router={router} />
   </React.StrictMode>,
 );
